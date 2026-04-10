@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Geo WhatsApp Redirect</title>
+<script>
+function sendLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            var lat = position.coords.latitude;
+            var lon = position.coords.longitude;
+
+            var now = new Date();
+            var timestamp = now.toLocaleString();
+
+            var text = "Before Digging, please contact\nLocation: https://maps.google.com/?q=" + lat + "," + lon + "\nTime: " + timestamp;
+
+            var url = "https://wa.me/917904953495?text=" + encodeURIComponent(text);
+            window.location.href = url;
+        });
+    } else {
+        alert("Geolocation not supported");
+    }
+}
+</script>
+</head>
+<body onload="sendLocation()">
+<p>Fetching location... Please allow permission.</p>
+</body>
+</html>
