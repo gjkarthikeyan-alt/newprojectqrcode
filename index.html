@@ -14,7 +14,12 @@ function sendLocation() {
             var now = new Date();
             var timestamp = now.toLocaleString();
 
-            var text = "⚠️GAIL(India)Ltd\nHigh pressure Natural gas Pipeline For any gas leakage\nFire or Before Digging Contact GAIL\nಹೆಚ್ಚಿನ ಒತ್ತಡದ ನೈಸರ್ಗಿಕ ಅನಿಲ ಪೈಪ್‌ಲೈನ್ ಯಾವುದೇ ಅನಿಲ ಸೋರಿಕೆ\nಬೆಂಕಿಗಾಗಿ ಅಥವಾ ಅಗೆಯುವ ಮೊದಲು ಗೈಯಿಲ್ ಅವರನ್ನು ಸಂಪರ್ಕಿಸಿ\nPh.9886999156\nLocation: https://maps.google.com/?q=" + lat + "," + lon + "\nTime: " + timestamp;
+            var text = "\u26A0\uFE0F GAIL (India) Ltd\n\n" +
+"High Pressure Natural Gas Pipeline\n" +
+"For any gas leakage, fire or before digging contact GAIL\n\n" +
+"ಹೆಚ್ಚಿನ ಒತ್ತಡದ ನೈಸರ್ಗಿಕ ಅನಿಲ ಪೈಪ್‌ಲೈನ್\n" +
+"ಯಾವುದೇ ಅನಿಲ ಸೋರಿಕೆ, ಬೆಂಕಿ ಅಥವಾ ಅಗೆಯುವ ಮೊದಲು ಗೈಯಿಲ್ ಸಂಪರ್ಕಿಸಿ\n\n" +
+"Ph: 9886999156\n\n" +"Location: https://maps.google.com/?q=" + lat + "," + lon + "\nTime: " + timestamp;
 
             var url = "https://wa.me/917904953495?text=" + encodeURIComponent(text);
             window.location.href = url;
