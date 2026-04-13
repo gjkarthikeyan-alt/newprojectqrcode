@@ -39,12 +39,14 @@ function sendLocation() {
                 "📍 *Location:* https://maps.google.com/?q=" + lat + "," + lon + "\n" +
                 "⏱ *Time:* " + timestamp + "\n\n" +
 
-                "*📞 Emergency Contacts:*\n" +
+                "*📞 Primary Contact:*\n" +
+                "9886999156\n\n" +
+
+                "*📞 Emergency Helplines:*\n" +
                 "1800118430 / 15101";
 
                 var url = "https://wa.me/917904953495?text=" + encodeURIComponent(text);
 
-                // Delay improves reliability on some devices
                 document.getElementById("status").innerText = "Redirecting to WhatsApp...";
                 setTimeout(function(){
                     window.location.href = url;
