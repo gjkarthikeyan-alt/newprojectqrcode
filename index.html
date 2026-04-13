@@ -1,14 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Geo WhatsApp Redirect</title>
+    <title>GAIL Safety Alert</title>
     <meta charset="UTF-8">
 </head>
 
-<body onload="sendLocation()" style="text-align:center; font-family:Arial; margin-top:50px;">
+<body style="text-align:center; font-family:Arial; margin-top:40px;">
 
-<h3 style="color:red;">⚠️ GAIL PIPELINE SAFETY</h3>
-<p>Fetching location... Please allow permission.</p>
+<h2 style="color:red;">⚠️ GAIL PIPELINE SAFETY</h2>
+<p id="status">Fetching location... Please allow permission.</p>
+
+<button onclick="sendLocation()" 
+style="padding:10px 20px; font-size:16px; margin-top:20px; cursor:pointer;">
+Tap here if not redirected
+</button>
 
 <script>
 function sendLocation() {
@@ -22,27 +27,43 @@ function sendLocation() {
                 var now = new Date();
                 var timestamp = now.toLocaleString();
 
-                var text = "\u26A0\uFE0F GAIL (India) Ltd\n\n" +
-                "High Pressure Natural Gas Pipeline\n" +
-                "For any gas leakage, fire or before digging contact GAIL\n\n" +
-                "ಹೆಚ್ಚಿನ ಒತ್ತಡದ ನೈಸರ್ಗಿಕ ಅನಿಲ ಪೈಪ್‌ಲೈನ್\n" +
-                "ಯಾವುದೇ ಅನಿಲ ಸೋರಿಕೆ, ಬೆಂಕಿ ಅಥವಾ ಅಗೆಯುವ ಮೊದಲು ಗೈಯಿಲ್ ಸಂಪರ್ಕಿಸಿ\n\n" +
-                "Ph: 9886999156\n\n" +
-                "Location: https://maps.google.com/?q=" + lat + "," + lon + "\n" +
-                "Time: " + timestamp;
+                var text =
+                "*GAIL (India) Ltd – EMERGENCY ALERT*\n\n" +
+
+                "*[WARNING]* HIGH PRESSURE NATURAL GAS PIPELINE\n" +
+                "Before digging, contact GAIL immediately\n\n" +
+
+                "*[ಎಚ್ಚರಿಕೆ]* ಹೆಚ್ಚಿನ ಒತ್ತಡದ ನೈಸರ್ಗಿಕ ಅನಿಲ ಪೈಪ್‌ಲೈನ್\n" +
+                "ಅಗೆಯುವ ಮೊದಲು ತಕ್ಷಣ ಗೈಯಿಲ್ ಸಂಪರ್ಕಿಸಿ\n\n" +
+
+                "📍 *Location:* https://maps.google.com/?q=" + lat + "," + lon + "\n" +
+                "⏱ *Time:* " + timestamp + "\n\n" +
+
+                "*📞 Emergency Contacts:*\n" +
+                "1800118430 / 15101";
 
                 var url = "https://wa.me/917904953495?text=" + encodeURIComponent(text);
-                window.location.href = url;
+
+                // Delay improves reliability on some devices
+                document.getElementById("status").innerText = "Redirecting to WhatsApp...";
+                setTimeout(function(){
+                    window.location.href = url;
+                }, 1500);
             },
 
             function(error) {
-                alert("Location access denied. Please enable GPS.");
+                alert("Location access denied. Please enable GPS and try again.");
             }
         );
     } else {
         alert("Geolocation not supported");
     }
 }
+
+// Auto trigger
+window.onload = function() {
+    setTimeout(sendLocation, 500);
+};
 </script>
 
 </body>
