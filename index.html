@@ -1,36 +1,49 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Geo WhatsApp Redirect</title>
-<meta charset="UTF-8">
+    <title>Geo WhatsApp Redirect</title>
+    <meta charset="UTF-8">
 </head>
+
+<body onload="sendLocation()" style="text-align:center; font-family:Arial; margin-top:50px;">
+
+<h3 style="color:red;">⚠️ GAIL PIPELINE SAFETY</h3>
+<p>Fetching location... Please allow permission.</p>
+
 <script>
 function sendLocation() {
     if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-            var lat = position.coords.latitude;
-            var lon = position.coords.longitude;
+        navigator.geolocation.getCurrentPosition(
+            function(position) {
 
-            var now = new Date();
-            var timestamp = now.toLocaleString();
+                var lat = position.coords.latitude;
+                var lon = position.coords.longitude;
 
-            var text = "\u26A0\uFE0F GAIL (India) Ltd\n\n" +
-"High Pressure Natural Gas Pipeline\n" +
-"For any gas leakage, fire or before digging contact GAIL\n\n" +
-"ಹೆಚ್ಚಿನ ಒತ್ತಡದ ನೈಸರ್ಗಿಕ ಅನಿಲ ಪೈಪ್‌ಲೈನ್\n" +
-"ಯಾವುದೇ ಅನಿಲ ಸೋರಿಕೆ, ಬೆಂಕಿ ಅಥವಾ ಅಗೆಯುವ ಮೊದಲು ಗೈಯಿಲ್ ಸಂಪರ್ಕಿಸಿ\n\n" +
-"Ph: 9886999156\n\n" +"Location: https://maps.google.com/?q=" + lat + "," + lon + "\nTime: " + timestamp;
+                var now = new Date();
+                var timestamp = now.toLocaleString();
 
-            var url = "https://wa.me/917904953495?text=" + encodeURIComponent(text);
-            window.location.href = url;
-        });
+                var text = "\u26A0\uFE0F GAIL (India) Ltd\n\n" +
+                "High Pressure Natural Gas Pipeline\n" +
+                "For any gas leakage, fire or before digging contact GAIL\n\n" +
+                "ಹೆಚ್ಚಿನ ಒತ್ತಡದ ನೈಸರ್ಗಿಕ ಅನಿಲ ಪೈಪ್‌ಲೈನ್\n" +
+                "ಯಾವುದೇ ಅನಿಲ ಸೋರಿಕೆ, ಬೆಂಕಿ ಅಥವಾ ಅಗೆಯುವ ಮೊದಲು ಗೈಯಿಲ್ ಸಂಪರ್ಕಿಸಿ\n\n" +
+                "Ph: 9886999156\n\n" +
+                "Location: https://maps.google.com/?q=" + lat + "," + lon + "\n" +
+                "Time: " + timestamp;
+
+                var url = "https://wa.me/917904953495?text=" + encodeURIComponent(text);
+                window.location.href = url;
+            },
+
+            function(error) {
+                alert("Location access denied. Please enable GPS.");
+            }
+        );
     } else {
         alert("Geolocation not supported");
     }
 }
 </script>
-</head>
-<body onload="sendLocation()">
-<p>Fetching location... Please allow permission.</p>
+
 </body>
 </html>
