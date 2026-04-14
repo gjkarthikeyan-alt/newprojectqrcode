@@ -8,7 +8,16 @@
 <body style="text-align:center; font-family:Arial; margin-top:40px;">
 
 <h2 style="color:red;">▲ GAIL PIPELINE SAFETY</h2>
+
 <p id="status">Fetching location... Please allow permission.</p>
+
+<!-- ✅ USER GUIDANCE -->
+<p style="margin-top:20px; font-size:14px; color:#333;">
+If not working:<br>
+1. Enable GPS<br>
+2. Allow location access<br>
+3. Open in Chrome browser
+</p>
 
 <button onclick="sendLocation()" 
 style="padding:10px 20px; font-size:16px; margin-top:20px; cursor:pointer;">
@@ -27,34 +36,37 @@ function sendLocation() {
                 var now = new Date();
                 var timestamp = now.toLocaleString();
 
+                // ✅ USE ONLY STABLE SYMBOLS (NO ⚠️)
                 var text =
-"*GAIL (India) Ltd – EMERGENCY ALERT*\n\n" +
+                "*GAIL (India) Ltd – EMERGENCY ALERT*\n\n" +
 
-"*[▲ WARNING! ⚠️]* HIGH PRESSURE NATURAL GAS PIPELINE\n" +
-"For any gas leakage / FIRE or Before Digging Contact GAIL\n\n" +
+                "*[▲ WARNING]* HIGH PRESSURE NATURAL GAS PIPELINE\n" +
+                "For any gas leakage / FIRE or Before Digging Contact GAIL\n\n" +
 
-"*[▲ ಎಚ್ಚರಿಕೆ! ⚠️]* ಹೆಚ್ಚಿನ ಒತ್ತಡದ ನೈಸರ್ಗಿಕ ಅನಿಲ ಪೈಪ್‌ಲೈನ್\n" +
-"ಯಾವುದೇ ಅನಿಲ ಸೋರಿಕೆ / ಬೆಂಕಿ ಅಥವಾ ಅಗೆಯುವ ಮೊದಲು ಗೈಯಿಲ್ ಸಂಪರ್ಕಿಸಿ\n\n" +
+                "*[▲ ಎಚ್ಚರಿಕೆ]* ಹೆಚ್ಚಿನ ಒತ್ತಡದ ನೈಸರ್ಗಿಕ ಅನಿಲ ಪೈಪ್‌ಲೈನ್\n" +
+                "ಯಾವುದೇ ಅನಿಲ ಸೋರಿಕೆ / ಬೆಂಕಿ ಅಥವಾ ಅಗೆಯುವ ಮೊದಲು ಗೈಯಿಲ್ ಸಂಪರ್ಕಿಸಿ\n\n" +
 
-"Location: https://maps.google.com/?q=" + lat + "," + lon + "\n" +
-"Time: " + timestamp + "\n\n" +
+                "Location: https://maps.google.com/?q=" + lat + "," + lon + "\n" +
+                "Time: " + timestamp + "\n\n" +
 
-"*Primary Contact:*\n" +
-"9886999156\n\n" +
+                "*Primary Contact:*\n" +
+                "9886999156\n\n" +
 
-"*Emergency Helplines:*\n" +
-"1800118430 / 15101";
+                "*Emergency Helplines:*\n" +
+                "1800118430 / 15101";
 
                 var url = "https://wa.me/917904953495?text=" + encodeURIComponent(text);
 
                 document.getElementById("status").innerText = "Redirecting to WhatsApp...";
+
                 setTimeout(function(){
                     window.location.href = url;
                 }, 1500);
             },
 
             function(error) {
-                alert("Location access denied. Please enable GPS and try again.");
+                document.getElementById("status").innerText =
+                "Location access denied. Please enable GPS and allow permission.";
             }
         );
     } else {
