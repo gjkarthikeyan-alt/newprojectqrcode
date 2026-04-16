@@ -9,64 +9,102 @@
 
 <h2 style="color:red;">▲ GAIL PIPELINE SAFETY</h2>
 
-<p id="status">Fetching location... Please allow permission.</p>
+<p id="status">Tap below to send location via WhatsApp</p>
 
-<!-- ✅ USER GUIDANCE -->
-<p style="margin-top:20px; font-size:14px; color:#333;">
-If not working:<br>
-1. Enable GPS<br>
-2. Allow location access<br>
-3. Open in Chrome browser
-</p>
+<!-- Language Toggle -->
+<button onclick="setLanguage('en')">English</button>
+<button onclick="setLanguage('kn')">ಕನ್ನಡ</button>
 
+<p id="instructions" style="margin-top:20px; font-size:14px;"></p>
+
+<!-- Main Button -->
 <button onclick="sendLocation()" 
-style="padding:10px 20px; font-size:16px; margin-top:20px; cursor:pointer;">
-Tap here if not redirected
+style="padding:12px 25px; font-size:18px; margin-top:20px; cursor:pointer;">
+Send Location
+</button>
+
+<!-- Fallback Button -->
+<br><br>
+<button onclick="openWhatsAppWithoutLocation()" 
+style="padding:8px 15px; font-size:14px;">
+Send Without Location
 </button>
 
 <script>
+var lang = "en";
+
+function setLanguage(l) {
+    lang = l;
+    updateInstructions();
+}
+
+function updateInstructions() {
+    if (lang === "kn") {
+        document.getElementById("instructions").innerHTML =
+        "ಸಮಸ್ಯೆ ಇದ್ದರೆ:<br>1. GPS ಆನ್ ಮಾಡಿ<br>2. ಲೊಕೇಶನ್ ಅನುಮತಿ ನೀಡಿ<br>3. Safari/Chrome ಬಳಸಿ";
+    } else {
+        document.getElementById("instructions").innerHTML =
+        "If not working:<br>1. Enable GPS<br>2. Allow location<br>3. Open in Safari/Chrome";
+    }
+}
+
+updateInstructions();
+
+function isIOS() {
+    return /iPhone|iPad|iPod/i.test(navigator.userAgent);
+}
+
 function sendLocation() {
+
+    if (!navigator.onLine) {
+        alert("No internet connection. Please try again.");
+        return;
+    }
+
+    document.getElementById("status").innerText = "Fetching location...";
+
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
             function(position) {
 
                 var lat = position.coords.latitude;
                 var lon = position.coords.longitude;
+                var timestamp = new Date().toLocaleString();
 
-                var now = new Date();
-                var timestamp = now.toLocaleString();
+                var text = "";
 
-                // ✅ USE ONLY STABLE SYMBOLS (NO ⚠️)
-                var text =
-                "*GAIL (India) Ltd – EMERGENCY ALERT*\n\n" +
+                if (lang === "kn") {
+                    text =
+                    "*GAIL (India) Ltd – ತುರ್ತು ಎಚ್ಚರಿಕೆ*\n\n" +
 
-                "*[▲ WARNING]* HIGH PRESSURE NATURAL GAS PIPELINE\n" +
-                "For any gas leakage / FIRE or Before Digging Contact GAIL\n\n" +
+                    "*[▲ ಎಚ್ಚರಿಕೆ]* ಹೆಚ್ಚಿನ ಒತ್ತಡದ ಅನಿಲ ಪೈಪ್‌ಲೈನ್\n" +
+                    "ಯಾವುದೇ ಅನಿಲ ಸೋರಿಕೆ / ಬೆಂಕಿ ಅಥವಾ ಅಗೆಯುವ ಮೊದಲು ಗೈಯಿಲ್ ಸಂಪರ್ಕಿಸಿ\n\n" +
 
-                "*[▲ ಎಚ್ಚರಿಕೆ]* ಹೆಚ್ಚಿನ ಒತ್ತಡದ ನೈಸರ್ಗಿಕ ಅನಿಲ ಪೈಪ್‌ಲೈನ್\n" +
-                "ಯಾವುದೇ ಅನಿಲ ಸೋರಿಕೆ / ಬೆಂಕಿ ಅಥವಾ ಅಗೆಯುವ ಮೊದಲು ಗೈಯಿಲ್ ಸಂಪರ್ಕಿಸಿ\n\n" +
+                    "Location: https://maps.google.com/?q=" + lat + "," + lon + "\n" +
+                    "Time: " + timestamp + "\n\n" +
 
-                "Location: https://maps.google.com/?q=" + lat + "," + lon + "\n" +
-                "Time: " + timestamp + "\n\n" +
+                    "Primary: 9886999156\n" +
+                    "Emergency: 1800118430 / 15101";
 
-                "*Primary Contact:*\n" +
-                "9886999156\n\n" +
+                } else {
+                    text =
+                    "*GAIL (India) Ltd – EMERGENCY ALERT*\n\n" +
 
-                "*Emergency Helplines:*\n" +
-                "1800118430 / 15101";
+                    "*[▲ WARNING]* HIGH PRESSURE NATURAL GAS PIPELINE\n" +
+                    "For any gas leakage / FIRE or Before Digging Contact GAIL\n\n" +
 
-                var url = "https://wa.me/917904953495?text=" + encodeURIComponent(text);
+                    "Location: https://maps.google.com/?q=" + lat + "," + lon + "\n" +
+                    "Time: " + timestamp + "\n\n" +
 
-                document.getElementById("status").innerText = "Redirecting to WhatsApp...";
+                    "Primary: 9886999156\n" +
+                    "Emergency: 1800118430 / 15101";
+                }
 
-                setTimeout(function(){
-                    window.location.href = url;
-                }, 1500);
+                openWhatsApp(text);
             },
 
             function(error) {
-                document.getElementById("status").innerText =
-                "Location access denied. Please enable GPS and allow permission.";
+                alert("Location denied. You can send without location.");
             }
         );
     } else {
@@ -74,10 +112,27 @@ function sendLocation() {
     }
 }
 
-// Auto trigger
-window.onload = function() {
-    setTimeout(sendLocation, 500);
-};
+function openWhatsApp(text) {
+    var encoded = encodeURIComponent(text);
+
+    var url = "";
+
+    if (isIOS()) {
+        url = "https://api.whatsapp.com/send?phone=917904953495&text=" + encoded;
+    } else {
+        url = "https://wa.me/917904953495?text=" + encoded;
+    }
+
+    window.open(url, "_blank");
+}
+
+function openWhatsAppWithoutLocation() {
+    var text = (lang === "kn") ?
+    "*GAIL Alert*\nLocation not shared\nContact: 9886999156" :
+    "*GAIL Alert*\nLocation not shared\nContact: 9886999156";
+
+    openWhatsApp(text);
+}
 </script>
 
 </body>
