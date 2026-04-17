@@ -5,61 +5,43 @@
     <meta charset="UTF-8">
 </head>
 
-<body style="text-align:center; font-family:Arial; margin-top:40px;">
+<body style="text-align:center; font-family:Arial; margin-top:30px;">
 
+<!-- HEADER -->
 <h2 style="color:red;">▲ GAIL PIPELINE SAFETY</h2>
 
-<p id="status">Tap below to send location via WhatsApp</p>
+<!-- 🔴 RED WARNING (HIGH VISIBILITY) -->
+<p style="color:red; font-weight:bold; font-size:18px;">
+HIGH PRESSURE NATURAL GAS PIPELINE<br>
+For any gas leakage / FIRE or Before Digging Contact GAIL
+</p>
 
-<!-- Language Toggle -->
-<button onclick="setLanguage('en')">English</button>
-<button onclick="setLanguage('kn')">ಕನ್ನಡ</button>
+<p style="color:red; font-weight:bold; font-size:18px;">
+ಹೆಚ್ಚಿನ ಒತ್ತಡದ ನೈಸರ್ಗಿಕ ಅನಿಲ ಪೈಪ್‌ಲೈನ್<br>
+ಯಾವುದೇ ಅನಿಲ ಸೋರಿಕೆ / ಬೆಂಕಿ ಅಥವಾ ಅಗೆಯುವ ಮೊದಲು ಗೈಯಿಲ್ ಸಂಪರ್ಕಿಸಿ
+</p>
 
-<p id="instructions" style="margin-top:20px; font-size:14px;"></p>
+<!-- STATUS -->
+<p id="status">Please wait...</p>
 
-<!-- Main Button -->
-<button onclick="sendLocation()" 
-style="padding:12px 25px; font-size:18px; margin-top:20px; cursor:pointer;">
-Send Location
+<!-- FALLBACK BUTTON (hidden initially) -->
+<button id="manualBtn" onclick="sendLocation()" 
+style="display:none; padding:12px 25px; font-size:18px; margin-top:20px;">
+Tap here if not redirected
 </button>
 
-<!-- Fallback Button -->
-<br><br>
-<button onclick="openWhatsAppWithoutLocation()" 
-style="padding:8px 15px; font-size:14px;">
-Send Without Location
-</button>
+<!-- HELP TEXT -->
+<p id="helpText" style="display:none; font-size:14px; margin-top:15px;">
+If not working:<br>
+Enable GPS • Allow Location • Open in Chrome/Safari
+</p>
 
 <script>
-var lang = "en";
-
-function setLanguage(l) {
-    lang = l;
-    updateInstructions();
-}
-
-function updateInstructions() {
-    if (lang === "kn") {
-        document.getElementById("instructions").innerHTML =
-        "ಸಮಸ್ಯೆ ಇದ್ದರೆ:<br>1. GPS ಆನ್ ಮಾಡಿ<br>2. ಲೊಕೇಶನ್ ಅನುಮತಿ ನೀಡಿ<br>3. Safari/Chrome ಬಳಸಿ";
-    } else {
-        document.getElementById("instructions").innerHTML =
-        "If not working:<br>1. Enable GPS<br>2. Allow location<br>3. Open in Safari/Chrome";
-    }
-}
-
-updateInstructions();
-
 function isIOS() {
     return /iPhone|iPad|iPod/i.test(navigator.userAgent);
 }
 
 function sendLocation() {
-
-    if (!navigator.onLine) {
-        alert("No internet connection. Please try again.");
-        return;
-    }
 
     document.getElementById("status").innerText = "Fetching location...";
 
@@ -71,68 +53,59 @@ function sendLocation() {
                 var lon = position.coords.longitude;
                 var timestamp = new Date().toLocaleString();
 
-                var text = "";
+                // ✅ WHATSAPP MESSAGE (BOLD WARNING)
+                var text =
+                "*GAIL (India) Ltd – EMERGENCY ALERT*\n\n" +
 
-                if (lang === "kn") {
-                    text =
-                    "*GAIL (India) Ltd – ತುರ್ತು ಎಚ್ಚರಿಕೆ*\n\n" +
+                "*[▲ WARNING]* *HIGH PRESSURE NATURAL GAS PIPELINE*\n" +
+                "*For any gas leakage / FIRE or Before Digging Contact GAIL*\n\n" +
 
-                    "*[▲ ಎಚ್ಚರಿಕೆ]* ಹೆಚ್ಚಿನ ಒತ್ತಡದ ಅನಿಲ ಪೈಪ್‌ಲೈನ್\n" +
-                    "ಯಾವುದೇ ಅನಿಲ ಸೋರಿಕೆ / ಬೆಂಕಿ ಅಥವಾ ಅಗೆಯುವ ಮೊದಲು ಗೈಯಿಲ್ ಸಂಪರ್ಕಿಸಿ\n\n" +
+                "*[▲ ಎಚ್ಚರಿಕೆ]* *ಹೆಚ್ಚಿನ ಒತ್ತಡದ ನೈಸರ್ಗಿಕ ಅನಿಲ ಪೈಪ್‌ಲೈನ್*\n" +
+                "*ಯಾವುದೇ ಅನಿಲ ಸೋರಿಕೆ / ಬೆಂಕಿ ಅಥವಾ ಅಗೆಯುವ ಮೊದಲು ಗೈಯಿಲ್ ಸಂಪರ್ಕಿಸಿ*\n\n" +
 
-                    "Location: https://maps.google.com/?q=" + lat + "," + lon + "\n" +
-                    "Time: " + timestamp + "\n\n" +
+                "Location: https://maps.google.com/?q=" + lat + "," + lon + "\n" +
+                "Time: " + timestamp + "\n\n" +
 
-                    "Primary: 9886999156\n" +
-                    "Emergency: 1800118430 / 15101";
+                "*Primary Contact:*\n9886999156\n\n" +
+                "*Emergency Helplines:*\n1800118430 / 15101";
 
-                } else {
-                    text =
-                    "*GAIL (India) Ltd – EMERGENCY ALERT*\n\n" +
+                var encoded = encodeURIComponent(text);
 
-                    "*[▲ WARNING]* HIGH PRESSURE NATURAL GAS PIPELINE\n" +
-                    "For any gas leakage / FIRE or Before Digging Contact GAIL\n\n" +
+                var url = isIOS()
+                    ? "https://api.whatsapp.com/send?phone=917904953495&text=" + encoded
+                    : "https://wa.me/917904953495?text=" + encoded;
 
-                    "Location: https://maps.google.com/?q=" + lat + "," + lon + "\n" +
-                    "Time: " + timestamp + "\n\n" +
+                document.getElementById("status").innerText = "Opening WhatsApp...";
 
-                    "Primary: 9886999156\n" +
-                    "Emergency: 1800118430 / 15101";
-                }
-
-                openWhatsApp(text);
+                // AUTO REDIRECT
+                window.location.href = url;
             },
 
             function(error) {
-                alert("Location denied. You can send without location.");
+                showManualOption("Location access denied");
             }
         );
     } else {
-        alert("Geolocation not supported");
+        showManualOption("Geolocation not supported");
     }
 }
 
-function openWhatsApp(text) {
-    var encoded = encodeURIComponent(text);
-
-    var url = "";
-
-    if (isIOS()) {
-        url = "https://api.whatsapp.com/send?phone=917904953495&text=" + encoded;
-    } else {
-        url = "https://wa.me/917904953495?text=" + encoded;
-    }
-
-    window.open(url, "_blank");
+function showManualOption(msg) {
+    document.getElementById("status").innerText = msg;
+    document.getElementById("manualBtn").style.display = "inline-block";
+    document.getElementById("helpText").style.display = "block";
 }
 
-function openWhatsAppWithoutLocation() {
-    var text = (lang === "kn") ?
-    "*GAIL Alert*\nLocation not shared\nContact: 9886999156" :
-    "*GAIL Alert*\nLocation not shared\nContact: 9886999156";
+// AUTO START
+window.onload = function() {
+    sendLocation();
 
-    openWhatsApp(text);
-}
+    // Fallback after 3 seconds
+    setTimeout(function(){
+        document.getElementById("manualBtn").style.display = "inline-block";
+        document.getElementById("helpText").style.display = "block";
+    }, 3000);
+};
 </script>
 
 </body>
