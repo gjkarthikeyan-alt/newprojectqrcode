@@ -10,21 +10,21 @@
 <!-- HEADER -->
 <h2 style="color:red;">▲ GAIL PIPELINE SAFETY</h2>
 
-<!-- 🔴 RED WARNING (HIGH VISIBILITY) -->
+<!-- 🔴 RED WARNING (UPDATED) -->
 <p style="color:red; font-weight:bold; font-size:18px;">
-HIGH PRESSURE NATURAL GAS PIPELINE<br>
+HIGH PRESSURE FLAMMABLE NATURAL GAS PIPELINE<br>
 For any gas leakage / FIRE or Before Digging Contact GAIL
 </p>
 
 <p style="color:red; font-weight:bold; font-size:18px;">
-ಹೆಚ್ಚಿನ ಒತ್ತಡದ ನೈಸರ್ಗಿಕ ಅನಿಲ ಪೈಪ್‌ಲೈನ್<br>
+ಹೆಚ್ಚಿನ ಒತ್ತಡದ ಜ್ವಲನೀಯ ನೈಸರ್ಗಿಕ ಅನಿಲ ಪೈಪ್‌ಲೈನ್<br>
 ಯಾವುದೇ ಅನಿಲ ಸೋರಿಕೆ / ಬೆಂಕಿ ಅಥವಾ ಅಗೆಯುವ ಮೊದಲು ಗೈಯಿಲ್ ಸಂಪರ್ಕಿಸಿ
 </p>
 
 <!-- STATUS -->
 <p id="status">Please wait...</p>
 
-<!-- FALLBACK BUTTON (hidden initially) -->
+<!-- FALLBACK BUTTON -->
 <button id="manualBtn" onclick="sendLocation()" 
 style="display:none; padding:12px 25px; font-size:18px; margin-top:20px;">
 Tap here if not redirected
@@ -53,14 +53,14 @@ function sendLocation() {
                 var lon = position.coords.longitude;
                 var timestamp = new Date().toLocaleString();
 
-                // ✅ WHATSAPP MESSAGE (BOLD WARNING)
+                // ✅ UPDATED WHATSAPP MESSAGE
                 var text =
                 "*GAIL (India) Ltd – EMERGENCY ALERT*\n\n" +
 
-                "*[▲ WARNING]* *HIGH PRESSURE NATURAL GAS PIPELINE*\n" +
+                "*[▲ WARNING FLAMMABLE NATURAL GAS]* *HIGH PRESSURE PIPELINE*\n" +
                 "*For any gas leakage / FIRE or Before Digging Contact GAIL*\n\n" +
 
-                "*[▲ ಎಚ್ಚರಿಕೆ]* *ಹೆಚ್ಚಿನ ಒತ್ತಡದ ನೈಸರ್ಗಿಕ ಅನಿಲ ಪೈಪ್‌ಲೈನ್*\n" +
+                "*[▲ ಎಚ್ಚರಿಕೆ ಜ್ವಲನೀಯ ಪ್ರಕೃತಿಕ ಅನಿಲ]* *ಹೆಚ್ಚಿನ ಒತ್ತಡದ ಪೈಪ್‌ಲೈನ್*\n" +
                 "*ಯಾವುದೇ ಅನಿಲ ಸೋರಿಕೆ / ಬೆಂಕಿ ಅಥವಾ ಅಗೆಯುವ ಮೊದಲು ಗೈಯಿಲ್ ಸಂಪರ್ಕಿಸಿ*\n\n" +
 
                 "Location: https://maps.google.com/?q=" + lat + "," + lon + "\n" +
@@ -77,7 +77,6 @@ function sendLocation() {
 
                 document.getElementById("status").innerText = "Opening WhatsApp...";
 
-                // AUTO REDIRECT
                 window.location.href = url;
             },
 
@@ -100,7 +99,6 @@ function showManualOption(msg) {
 window.onload = function() {
     sendLocation();
 
-    // Fallback after 3 seconds
     setTimeout(function(){
         document.getElementById("manualBtn").style.display = "inline-block";
         document.getElementById("helpText").style.display = "block";
