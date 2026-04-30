@@ -7,10 +7,8 @@
 
 <body style="text-align:center; font-family:Arial; margin-top:30px;">
 
-<!-- HEADER -->
 <h2 style="color:red;">▲ GAIL PIPELINE SAFETY</h2>
 
-<!-- 🔴 RED WARNING (UPDATED) -->
 <p style="color:red; font-weight:bold; font-size:18px;">
 HIGH PRESSURE FLAMMABLE NATURAL GAS PIPELINE<br>
 For any gas leakage / FIRE or Before Digging Contact GAIL
@@ -21,16 +19,13 @@ For any gas leakage / FIRE or Before Digging Contact GAIL
 ಯಾವುದೇ ಅನಿಲ ಸೋರಿಕೆ / ಬೆಂಕಿ ಅಥವಾ ಅಗೆಯುವ ಮೊದಲು ಗೈಯಿಲ್ ಸಂಪರ್ಕಿಸಿ
 </p>
 
-<!-- STATUS -->
 <p id="status">Please wait...</p>
 
-<!-- FALLBACK BUTTON -->
 <button id="manualBtn" onclick="sendLocation()" 
 style="display:none; padding:12px 25px; font-size:18px; margin-top:20px;">
 Tap here if not redirected
 </button>
 
-<!-- HELP TEXT -->
 <p id="helpText" style="display:none; font-size:14px; margin-top:15px;">
 If not working:<br>
 Enable GPS • Allow Location • Open in Chrome/Safari
@@ -53,21 +48,19 @@ function sendLocation() {
                 var lon = position.coords.longitude;
                 var timestamp = new Date().toLocaleString();
 
-                // ✅ UPDATED WHATSAPP MESSAGE
                 var text =
                 "*GAIL (India) Ltd – EMERGENCY ALERT*\n\n" +
 
-                "*[▲ WARNING FLAMMABLE NATURAL GAS]* *HIGH PRESSURE PIPELINE*\n" +
-                "*For any gas leakage / FIRE or Before Digging Contact GAIL*\n\n" +
+                "*[▲ WARNING FLAMMABLE NATURAL GAS]* HIGH PRESSURE PIPELINE\n" +
+                "For any gas leakage / FIRE or Before Digging Contact GAIL\n\n" +
 
-                "*[▲ ಎಚ್ಚರಿಕೆ ಜ್ವಲನೀಯ ಪ್ರಕೃತಿಕ ಅನಿಲ]* *ಹೆಚ್ಚಿನ ಒತ್ತಡದ ಪೈಪ್‌ಲೈನ್*\n" +
-                "*ಯಾವುದೇ ಅನಿಲ ಸೋರಿಕೆ / ಬೆಂಕಿ ಅಥವಾ ಅಗೆಯುವ ಮೊದಲು ಗೈಯಿಲ್ ಸಂಪರ್ಕಿಸಿ*\n\n" +
+                "*[▲ ಎಚ್ಚರಿಕೆ ಜ್ವಲನೀಯ ನೈಸರ್ಗಿಕ ಅನಿಲ]* ಹೆಚ್ಚಿನ ಒತ್ತಡದ ಪೈಪ್‌ಲೈನ್\n" +
+                "ಯಾವುದೇ ಅನಿಲ ಸೋರಿಕೆ / ಬೆಂಕಿ ಅಥವಾ ಅಗೆಯುವ ಮೊದಲು ಗೈಯಿಲ್ ಸಂಪರ್ಕಿಸಿ\n\n" +
 
                 "Location: https://maps.google.com/?q=" + lat + "," + lon + "\n" +
                 "Time: " + timestamp + "\n\n" +
 
-                "*Emergency Contact:*\n" +
-                "9886999156";
+                "*Emergency Contact:*\n9886999156";
 
                 var encoded = encodeURIComponent(text);
 
@@ -95,7 +88,6 @@ function showManualOption(msg) {
     document.getElementById("helpText").style.display = "block";
 }
 
-// AUTO START
 window.onload = function() {
     sendLocation();
 
